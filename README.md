@@ -1,2 +1,2 @@
 # MyProjectManager
-A project manager written in JavaScript
+A project manager written in PHP and JS
