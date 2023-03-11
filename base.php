@@ -14,6 +14,12 @@
         }
     </style>
 </head>
+
+<?php 
+  include_once(__DIR__."/csv.php");
+  $boards = parseBoards();
+?>
+
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
@@ -34,7 +40,11 @@
             Boards
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
+            <?php 
+              foreach ($boards as $name => $_) {
+                echo "<li><a class=\"dropdown-item\" href=\"#\">{$name}</a></li>";
+              }
+            ?>
           </ul>
         </li>
       </ul>

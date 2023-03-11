@@ -2,8 +2,6 @@
 <div class="container">
   <div class="row row-cols-3">
     <?php 
-    include_once(__DIR__."/csv.php");
-    $boards = parseBoards();
     foreach ($boards as $name => $attrs) {
         echo "<div class=\"col\"><div class=\"card\" style=\"width: 18rem;\"><div class=\"card-body\"><h5 class=\"card-title\">{$name}</h5><p class=\"card-text\">{$attrs[0]}</p><a href=\"#\" class=\"btn btn-primary stretched-link\">Go to board</a></div></div></div>";
     }
