@@ -34,15 +34,7 @@
             Boards
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <?php 
-                $dir = new DirectoryIterator(dirname(__DIR__.'/boards/placeholder'));
-                foreach ($dir as $fileinfo) {
-                    $name = $fileinfo->getFilename();
-                    if (!$fileinfo->isDot() && $name != 'placeholder') {
-                        echo '<li><a class="dropdown-item" href="/index.php?action=board&board='.$name.'">'.$name.'</a></li>';
-                    }
-                }
-            ?>
+
           </ul>
         </li>
       </ul>
