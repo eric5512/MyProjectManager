@@ -23,7 +23,7 @@
   <div class="row row-cols-3">
     <?php
       foreach ($boards as $name => $attrs) {
-          echo "<div class=\"col\"><div class=\"card\" style=\"width: 18rem;\"><div class=\"card-body\"><h5 class=\"card-title\">{$name}</h5><p class=\"card-text\">{$attrs["desc"]}</p><a href=\"#\" class=\"btn btn-primary\">Go to board</a><br><form \"".htmlspecialchars($_SERVER["PHP_SELF"])."\" method=\"post\"><input type=\"hidden\" name=\"remove\" value=\"{$name}\" /><button type=\"submit\" class=\"btn btn-danger toggle-remove\" style=\"display: none\">Remove</a></form></div></div></div>";
+          echo "<div class=\"col\"><div class=\"card\" style=\"width: 18rem;\"><div class=\"card-body\"><h5 class=\"card-title\">{$name}</h5><p class=\"card-text\">{$attrs["desc"]}</p><a href=\"/index.php?action=board&board=$name\" class=\"btn btn-primary\">Go to board</a><br><form \"".htmlspecialchars($_SERVER["PHP_SELF"])."\" method=\"post\"><input type=\"hidden\" name=\"remove\" value=\"{$name}\" /><button type=\"submit\" class=\"btn btn-danger toggle-remove\" style=\"display: none\">Remove</a></form></div></div></div>";
       }
     ?>
   </div>
