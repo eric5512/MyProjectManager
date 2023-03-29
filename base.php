@@ -18,8 +18,7 @@
 </head>
 
 <?php 
-  include_once(__DIR__."/csv.php");
-  $boards = parseBoards();
+  include_once(__DIR__."/board_util.php");
 ?>
 
 <body>

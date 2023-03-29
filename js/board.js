@@ -24,7 +24,7 @@ $(function() {
       $( "#task-desc" ).html('<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>');
 
       var request = $.ajax({
-        url: "get_task_desc.php",
+        url: "ajax/get_task_desc.php",
         method: "POST",
         data: { board:$("#title").html(), col:$(this).parent().parent().parent().attr("value"), task:$(this).attr("value")},
         dataType: "html"

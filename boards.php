@@ -3,12 +3,12 @@
     if (!array_key_exists("remove", $_POST)) {
       $name = htmlspecialchars($_POST["name"]);
       $description = htmlspecialchars($_POST["description"]);
-      if (storeNewBoard($name, $description, $boards) === FALSE) {
+      if (BoardArray::storeNewBoard(new Board($name, $description)) === FALSE) {
         echo '<script>alert("There is a table with that name already")</script>';
       }
     } else {
       $name = htmlspecialchars($_POST["remove"]);
-      if (removeBoard($name, $boards) === FALSE) {
+      if (BoardArray::removeBoard($name) === FALSE) {
         echo '<script>alert("There isn\'t any table with that name")</script>';
 
       }
@@ -22,8 +22,8 @@
 <div class="container">
   <div class="row row-cols-3">
     <?php
-      foreach ($boards as $name => $attrs) {
-          echo "<div class=\"col\"><div class=\"card\" style=\"width: 18rem;\"><div class=\"card-body\"><h5 class=\"card-title\">{$name}</h5><p class=\"card-text\">{$attrs["desc"]}</p><a href=\"/index.php?action=board&board=$name\" class=\"btn btn-primary\">Go to board</a><br><form \"".htmlspecialchars($_SERVER["PHP_SELF"])."\" method=\"post\"><input type=\"hidden\" name=\"remove\" value=\"{$name}\" /><button type=\"submit\" class=\"btn btn-danger toggle-remove\" style=\"display: none\">Remove</a></form></div></div></div>";
+      foreach (BoardArray::loadBoards() as $board) {
+          echo "<div class=\"col\"><div class=\"card\" style=\"width: 18rem;\"><div class=\"card-body\"><h5 class=\"card-title\">{$board->name}</h5><p class=\"card-text\">{$board->desc}</p><a href=\"/index.php?action=board&board={$board->name}\" class=\"btn btn-primary\">Go to board</a><br><form \"".htmlspecialchars($_SERVER["PHP_SELF"])."\" method=\"post\"><input type=\"hidden\" name=\"remove\" value=\"{$board->name}\" /><button type=\"submit\" class=\"btn btn-danger toggle-remove\" style=\"display: none\">Remove</a></form></div></div></div>";
       }
     ?>
   </div>
