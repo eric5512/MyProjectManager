@@ -2,10 +2,14 @@
     class Task {
         public String $name;
         public String $desc;
+        public DateTime $due;
 
-        public function __construct(String $name, String $desc) {
+        public function __construct(String $name, String $desc, DateTime $due=null) {
             $this->name = $name;
             $this->desc = $desc;
+            if ($due !== null) {
+                $this->due = $due;
+            }
         }
     }
 
@@ -16,6 +20,17 @@
             } else {
                 throw new \InvalidArgumentException('Value must be a Task. Found ' . get_class($val));
             }
+        }
+
+        public function __add(TaskArray $other): TaskArray {
+            $result = new TaskArray();
+            foreach ($this as $task) {
+                $result->push(clone $task);
+            }
+            foreach ($other as $task) {
+                $result->push(clone $task);
+            }
+            return $result;
         }
 
         public function push(Task $task): TaskArray {
@@ -66,6 +81,10 @@
             }
         }
 
+        public function allTasks(): TaskArray{
+            return $this->todo->__add($this->progress->__add($this->test->__add($this->done))) ;
+        }
+
     }
     
     class BoardArray extends \ArrayObject {
@@ -91,11 +110,15 @@
                 throw new \Exception("Cannot open file " . self::FILE_NAME);
             }
 
-            fwrite($file, serialize($this));
+            fwrite($file, base64_encode(serialize($this)));
             fclose($file);
         }
 
-        static public function loadBoards(): BoardArray {
+        static public function loadBoards(): BoardArray | bool {
+            if (!file_exists(self::FILE_NAME)) {
+                return new BoardArray();
+            }
+
             $file = fopen(self::FILE_NAME, "r");
 
             if ($file === false) {
@@ -106,19 +129,11 @@
                 return new BoardArray();
             }
 
-            $data = unserialize(fread($file, filesize(self::FILE_NAME)));
+            $data = unserialize(base64_decode(fread($file, filesize(self::FILE_NAME))));
 
             fclose($file);
 
             return $data;
-        }
-
-        static public function storeNewBoard(Board $board) {
-            $boards = self::loadBoards();
-
-            $boards->push($board);
-            
-            $boards->storeBoards();
         }
 
         static public function removeBoard(String $name) {

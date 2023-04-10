@@ -4,10 +4,10 @@ $(function() { // TODO: dynamic loading from ajax response kills the listeners
       handle: ".portlet-header",
       cancel: ".portlet-toggle",
       placeholder: "portlet-placeholder ui-corner-all",
-      start: function(event, ui) {
+      stop: function(event, ui) {
         var task = ui.item.find("button").val();
         var to = ui.item.closest('.column').attr("value");
-        var request = $.ajax({
+        $.ajax({
           url: "controller/move_task.php",
           method: "POST",
           data: { 
@@ -16,13 +16,7 @@ $(function() { // TODO: dynamic loading from ajax response kills the listeners
             name:task
           },
           dataType: "html"
-        });
-
-        request.done(function( msg ) {
-          $( "#task-desc" ).html( msg );
-        });
-        
-        request.fail(function( jqXHR, textStatus ) {
+        }).fail(function( jqXHR, textStatus ) {
           alert( "Request failed: " + textStatus );
         });
       }
@@ -41,19 +35,35 @@ $(function() { // TODO: dynamic loading from ajax response kills the listeners
     });
 
     $("#create-new-task").click(function() {
-      var request = $.ajax({
-        url: "controller/new_task.php",
-        method: "POST",
-        data: { 
-          board:$("#title").html(), 
-          name:$( "#new-name" ).val(), 
-          description:$( "#new-description" ).val() 
-        },
-        dataType: "html"
-      });
-       
+      if ($("#has-date").prop("checked")) {
+        var request = $.ajax({
+          url: "controller/new_task.php",
+          method: "POST",
+          data: { 
+            board:$("#title").html(), 
+            name:$( "#new-name" ).val(), 
+            description:$( "#new-description" ).val(),
+            date:$("#due-date").val()
+          },
+          dataType: "html"
+        });
+      } else {
+        var request = $.ajax({
+          url: "controller/new_task.php",
+          method: "POST",
+          data: { 
+            board:$("#title").html(), 
+            name:$( "#new-name" ).val(), 
+            description:$( "#new-description" ).val() 
+          },
+          dataType: "html"
+        });
+      }
+
       request.done(function( msg ) {
         $( "#task-table" ).html( msg );
+        $("#new-name").val("");
+        $("#new-description").val("");
       });
        
       request.fail(function( jqXHR, textStatus ) {
@@ -89,19 +99,26 @@ $(function() { // TODO: dynamic loading from ajax response kills the listeners
       $( "#task-name" ).html(value);
       $( "#task-desc" ).html('<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>');
 
-      var request = $.ajax({
+      $.ajax({
         url: "controller/get_task_desc.php",
         method: "POST",
         data: { board:$("#title").html(), task:$(this).attr("value")},
         dataType: "html"
-      });
-      
-      request.done(function( msg ) {
+      }).done(function( msg ) {
         $( "#task-desc" ).html( msg );
       });
-      
-      request.fail(function( jqXHR, textStatus ) {
-        alert( "Request failed: " + textStatus );
+
+      $.ajax({
+        url: "controller/get_task_date.php",
+        method: "POST",
+        data: { board:$("#title").html(), task:$(this).attr("value")},
+        dataType: "html"
+      }).done(function( msg ) {
+        $( "#task-date" ).html( msg );
       });
+    })
+
+    $("#has-date").click(function() {
+      $("#due-date").prop("disabled", !$(this).prop("checked"));
     })
   });

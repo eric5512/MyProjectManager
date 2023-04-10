@@ -9,6 +9,6 @@
         $boards[$board]->$col->remove($task_name);
         $boards->storeBoards();
         
-        include_once(__DIR__."/../controller/task_table.php");
+        include_once(__DIR__."/task_table.php");
     }
 ?>

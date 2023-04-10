@@ -28,6 +28,12 @@
         <br>
         <label for="description">Description: </label><br>
         <textarea form="form-create" name="description" id="new-description" cols="30" rows="10" required></textarea>
+        <br>
+        <label for="has-date">Does this task has a limit date?</label>
+        <input type="checkbox" name="has-date" id="has-date">
+        <br>
+        <label for="meeting-time">Choose a meeting time:</label>
+        <input type="datetime-local" id="due-date" name="due-date" disabled>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="create-new-task" data-bs-dismiss="modal">Create</button>
@@ -45,6 +51,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="task-desc">
+        ...
+      </div>
+      <div class="modal-body" id="task-date">
         ...
       </div>
       <div class="modal-footer">
