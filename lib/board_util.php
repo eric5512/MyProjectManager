@@ -17,6 +17,20 @@
                 throw new \InvalidArgumentException('Value must be a Task. Found ' . get_class($val));
             }
         }
+
+        public function push(Task $task): TaskArray {
+            $this[$task->name] = $task;
+
+            return $this;
+        }
+
+        public function remove(String $name): TaskArray {
+            if ($this->offsetExists($name)) {
+                unset($this[$name]);
+            }
+
+            return $this;
+        }
     }
     
 
@@ -38,10 +52,24 @@
 
         }
 
+        public function findTaskCol(string $name): ?string {
+            if ($this->todo->offsetExists($name)) {
+                return "todo";
+            } elseif ($this->progress->offsetExists($name)) {
+                return "progress";
+            } elseif ($this->test->offsetExists($name)) {
+                return "test";
+            } elseif ($this->done->offsetExists($name)) {
+                return "done";
+            } else {
+                return null;
+            }
+        }
+
     }
     
     class BoardArray extends \ArrayObject {
-        const FILE_NAME = __DIR__."/data/data.ser";
+        const FILE_NAME = __DIR__."/../data/data.ser";
         public function offsetSet($key, $val): void {
             if ($val instanceof Board) {
                 parent::offsetSet($key, $val);

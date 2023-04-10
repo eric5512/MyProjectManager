@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
-    <script src="./bootstrap/js/bootstrap.min.js"></script>
-    <script src="./jQuery.js"></script>
-    <script src="./jquery_ui/jquery-ui.js"></script>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../JQuery/jQuery.js"></script>
+    <script src="../JQuery/jquery_ui/jquery-ui.js"></script>
 
     <title>My Project Manager</title>
     <style>
@@ -18,7 +18,8 @@
 </head>
 
 <?php 
-  include_once(__DIR__."/board_util.php");
+  include_once(ROOT_DIR."/lib/board_util.php");
+  $boards = BoardArray::loadBoards();
 ?>
 
 <body>
