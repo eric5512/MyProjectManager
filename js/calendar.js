@@ -59,7 +59,7 @@ $(function() {
         $("#year-val").attr("value", year);
     })
 
-    $(".day-btn").click(function() {
+    $("#calendar").on("click", ".day-btn", function() {
         var month = parseInt($("#month-h2").attr("value"));
         var year = parseInt($("#year-val").attr("value"))
         var num = $(this).attr("value");
